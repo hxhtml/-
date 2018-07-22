@@ -1,0 +1,52 @@
+import React from "react";
+import ReactDOM from "react-dom";
+import "antd/dist/antd.css";
+import "../css/index.css";
+import { Steps, Button, message } from 'antd';
+import Home from "./home.js";
+import Story from "./story.js";
+const Step = Steps.Step;//步数
+const steps = [{  
+	title: '第一步',  
+	content: <Home/>,
+    }, {  
+    title: '第二步',  
+    content: <Story/>,
+    }, {  
+    title: '第三步',  
+    content: '创建成功',
+    }];
+    class App extends React.Component {  
+    	constructor(props) {    
+    		super(props);    
+    		this.state = {
+    		    current: 0,    
+    		};  
+    	}  
+    	next() {    
+    		const current = this.state.current + 1;    
+    		this.setState({ current });  
+    	}  render() {    
+    		const { current } = this.state;    
+    		return (      
+    			<div>        
+    			<Steps current={current}>          
+                    {steps.map(item => <Step key={item.title} title={item.title} />)}        
+                </Steps>        
+    			<div className="steps-content">{steps[current].content}</div>        
+    			<div className="steps-action">         
+    			 {            
+    			 	current < steps.length - 1            
+    			 	&& <Button type="primary" onClick={() => this.next()}>下一步</Button>          
+    			 }         
+    			 {            
+    			  	current === steps.length - 1            
+    			  	&& <Button type="primary" onClick={() => 
+    			  		message.success('Processing complete!')}>注册</Button>          
+    			  	}                  
+    			  	</div>      
+    			  	</div>    
+    	    );  
+    	}
+    }
+ReactDOM.render(<App/>, document.getElementById("app"))
